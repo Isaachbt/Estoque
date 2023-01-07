@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void configAlertDialog(View view){
+        //testando se esta funcionando a atualização
 
         btnSalvarSaldo = view.findViewById(R.id.btn_salvar_newP);
         editValor_uni = view.findViewById(R.id.editTxt_Valor_newP);
