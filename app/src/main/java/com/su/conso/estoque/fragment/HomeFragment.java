@@ -1,14 +1,18 @@
 package com.su.conso.estoque.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.su.conso.estoque.R;
 
@@ -59,7 +63,10 @@ public class HomeFragment extends Fragment {
         }
     }
     private TextView txt_QP,txt_VT,txt_LP;
-    private ImageButton btnNewP,btnInfo;
+    private EditText editNome,editValor_uni,editKG,editQuantidade,editLucro;
+    private ImageButton btnNewP,btnInfo,btnSalvarSaldo;
+    private ConstraintLayout constraintLayout;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,16 +79,65 @@ public class HomeFragment extends Fragment {
         txt_LP = view.findViewById(R.id.txt_LP);
         btnNewP = view.findViewById(R.id.novoProduto);
         btnInfo = view.findViewById(R.id.btn_info);
+        constraintLayout = view.findViewById(R.id.constraint_alert);
 
         btnNewP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            novoProduto();
             }
         });
 
 
 
         return  view;
+    }
+
+    public void novoProduto(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity(),R.style.TemaAlertdialo);
+        View viewAlert = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dalog, constraintLayout);
+        alert.setCancelable(false);
+        alert.setView(viewAlert);
+
+       configAlertDialog(viewAlert);
+
+        alertDialog = alert.create();
+        alertDialog.show();
+    }
+
+    public void configAlertDialog(View view){
+
+        btnSalvarSaldo = view.findViewById(R.id.btn_salvar_newP);
+        editValor_uni = view.findViewById(R.id.editTxt_Valor_newP);
+        editKG = view.findViewById(R.id.editTxt_KG_newP);
+        editQuantidade = view.findViewById(R.id.editTxt_quantidade_newP);
+        editNome = view.findViewById(R.id.editTxt_nome_newP);
+        editLucro = view.findViewById(R.id.editTxt_lucro_newP);
+
+        btnSalvarSaldo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+//                try {
+//                    //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
+//                    if (!editNome.getText().toString().isEmpty()) {
+//                        if (!editKG.getText().toString().isEmpty()) {
+//                            if (!editQuantidade.getText().toString().isEmpty()) {
+//                                if (!editLucro.getText().toString().isEmpty()) {
+//                                    if (!editValor_uni.getText().toString().isEmpty() && !editValor_uni.getText().toString().equals("0")) {
+//                                        double saldo = Double.parseDouble(editValor_uni.getText().toString());
+//                                        Toast.makeText(getActivity(), "Salvo", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                    Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
+//                }
+            }
+        });
+
     }
 }
