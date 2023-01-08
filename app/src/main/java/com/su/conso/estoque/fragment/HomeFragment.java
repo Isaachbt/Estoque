@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment {
                             if (!editQuantidade.getText().toString().isEmpty()) {
                                 if (!editLucro.getText().toString().isEmpty()) {
                                     if (!editValor_uni.getText().toString().isEmpty() && !editValor_uni.getText().toString().equals("0")) {
-
+                                        //safdslajflkds
                                         double saldo = Double.parseDouble(editValor_uni.getText().toString());
                                         Toast.makeText(getActivity(), "Salvo", Toast.LENGTH_SHORT).show();
 
