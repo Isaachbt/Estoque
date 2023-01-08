@@ -139,6 +139,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-//vamos ver se vai pegar agr
+
     }
 }
