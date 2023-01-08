@@ -5,7 +5,6 @@ public class DadosProdutos {
     private String nome;
     private long id;
     private double valor_uni;
-    private double kg_uni;
     private double lucro_Previsto_uni ;
     private double valor_Total ;
     private double lucro_Previsto_total ;
@@ -34,14 +33,6 @@ public class DadosProdutos {
 
     public void setValor_uni(double valor_uni) {
         this.valor_uni = valor_uni;
-    }
-
-    public double getKg_uni() {
-        return kg_uni;
-    }
-
-    public void setKg_uni(double kg_uni) {
-        this.kg_uni = kg_uni;
     }
 
     public double getLucro_Previsto_uni() {

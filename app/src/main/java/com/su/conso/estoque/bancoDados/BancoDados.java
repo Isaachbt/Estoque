@@ -22,7 +22,7 @@ public class BancoDados extends SQLiteOpenHelper {
 
         String slq = "CREATE TABLE IF NOT EXISTS "+ NOME_TABELA +" " +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " nome TEXT, valor_uni REAL, kg_uni REAL, lucro_Previsto_uni REAL," +
+                " nome TEXT, valor_uni REAL,lucro_Previsto_uni REAL," +
                 "valor_Total REAL, lucro_Previsto_total REAL, Quantindade_P INTEGER," +
                 "Quantindade_P_total INTEGER)";
 

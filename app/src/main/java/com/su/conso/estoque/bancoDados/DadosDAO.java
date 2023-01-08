@@ -31,7 +31,6 @@ public class DadosDAO implements Idados{
             ContentValues cv = new ContentValues();
             cv.put("nome",dados.getNome());
             cv.put("valor_uni",dados.getValor_uni());
-            cv.put("kg_uni",dados.getKg_uni());
             cv.put("lucro_Previsto_uni",dados.getLucro_Previsto_uni());
             cv.put("valor_Total",dados.getValor_Total());
             cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
@@ -53,7 +52,6 @@ public class DadosDAO implements Idados{
             ContentValues cv = new ContentValues();
             cv.put("nome",dados.getNome());
             cv.put("valor_uni",dados.getValor_uni());
-            cv.put("kg_uni",dados.getKg_uni());
             cv.put("lucro_Previsto_uni",dados.getLucro_Previsto_uni());
             cv.put("valor_Total",dados.getValor_Total());
             cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
@@ -93,7 +91,6 @@ public class DadosDAO implements Idados{
                 int[] columnIndexArray = {
                         c.getColumnIndex("nome"),
                         c.getColumnIndex("valor_uni"),
-                        c.getColumnIndex("kg_uni"),
                         c.getColumnIndex("lucro_Previsto_uni"),
                         c.getColumnIndex("valor_Total"),
                         c.getColumnIndex("lucro_Previsto_total"),
@@ -103,7 +100,6 @@ public class DadosDAO implements Idados{
 
                 String nome = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[0])));
                 String valor_uni = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[1])));
-                String kg_uni = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[2])));
                 String lucro_Previsto_uni = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[3])));
                 String valor_Total = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[4])));
                 String lucro_Previsto_total = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[5])));
@@ -115,7 +111,6 @@ public class DadosDAO implements Idados{
                 dados.setId(id);
                 dados.setNome(nome);
                 dados.setValor_uni(Double.parseDouble(valor_uni));
-                dados.setKg_uni(Double.parseDouble(kg_uni));
                 dados.setLucro_Previsto_uni(Double.parseDouble(lucro_Previsto_uni));
                 dados.setValor_Total(Double.parseDouble(valor_Total));
                 dados.setLucro_Previsto_total(Double.parseDouble(lucro_Previsto_total));
