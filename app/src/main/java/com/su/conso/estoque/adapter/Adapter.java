@@ -3,12 +3,15 @@ package com.su.conso.estoque.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.su.conso.estoque.R;
+import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.model.DadosProdutos;
 
 import java.util.List;
@@ -30,7 +33,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-    DadosProdutos produtos = dados.get(position);
+        DadosProdutos produtos = dados.get(position);
 
         holder.nome.setText(produtos.getNome());
         String valor_uni = String.valueOf(produtos.getValor_uni());

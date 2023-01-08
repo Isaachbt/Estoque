@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
     private TextView txt_QP,txt_VT,txt_LP;
     private EditText editNome,editValor_uni,editQuantidade,editLucro;
     private ImageButton btnNewP,btnInfo,btnClose;
-    private Button btnSalvarSaldo;
+    private Button btnSalvarProduto;
     private ConstraintLayout constraintLayout;
     private AlertDialog alertDialog;
     private DadosDAO dadosDAO;
@@ -114,14 +114,14 @@ public class HomeFragment extends Fragment {
 
     public void configAlertDialog(View view){
 
-        btnSalvarSaldo = view.findViewById(R.id.btn_salvar_newP);
+        btnSalvarProduto = view.findViewById(R.id.btn_salvar_newP);
         editValor_uni = view.findViewById(R.id.editTxt_Valor_newP);
         editQuantidade = view.findViewById(R.id.editTxt_quantidade_newP);
         editNome = view.findViewById(R.id.editTxt_nome_newP);
         editLucro = view.findViewById(R.id.editTxt_lucro_newP);
         btnClose = view.findViewById(R.id.btnCloseNew_p);
 
-        btnSalvarSaldo.setOnClickListener(new View.OnClickListener() {
+        btnSalvarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
