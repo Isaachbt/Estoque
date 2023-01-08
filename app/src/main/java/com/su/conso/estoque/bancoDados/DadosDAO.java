@@ -88,23 +88,32 @@ public class DadosDAO implements Idados{
             while (c.moveToNext()){
                 DadosProdutos dados = new DadosProdutos();
                 int columnIndex = c.getColumnIndex("id");
-                int[] columnIndexArray = {
+
+                int[] index = {
                         c.getColumnIndex("nome"),
                         c.getColumnIndex("valor_uni"),
                         c.getColumnIndex("lucro_Previsto_uni"),
                         c.getColumnIndex("valor_Total"),
                         c.getColumnIndex("lucro_Previsto_total"),
                         c.getColumnIndex("Quantindade_P"),
-                        c.getColumnIndex("Quantindade_P_total"),
+                        c.getColumnIndex("Quantindade_P_total")
                 };
 
-                String nome = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[0])));
-                String valor_uni = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[1])));
-                String lucro_Previsto_uni = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[3])));
-                String valor_Total = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[4])));
-                String lucro_Previsto_total = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[5])));
-                String Quantindade_P = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[6])));
-                String Quantindade_P_total = c.getString(Integer.parseInt(String.valueOf(columnIndexArray[7])));
+//                String nomeConlum = String.valueOf(c.getColumnIndex("nome"));
+//                String valorUniColum = String.valueOf(c.getColumnIndex("valor_uni"));
+//                String lucroPreConlum = String.valueOf(c.getColumnIndex("lucro_Previsto_uni"));
+//                String valorTotalConlum = String.valueOf(c.getColumnIndex("valor_Total"));
+//                String lucroPreTotalConlum = String.valueOf(c.getColumnIndex("lucro_Previsto_total"));
+//                String quantidadePConlum = String.valueOf(c.getColumnIndex("Quantindade_P"));
+//                String quantidadePTotalConlum = String.valueOf(c.getColumnIndex("Quantindade_P_total"));
+
+                String nome = c.getString(index[0]);
+                String valor_uni = c.getString(index[1]);
+                String lucro_Previsto_uni = c.getString(index[2]);
+                String valor_Total = c.getString(index[3]);
+                String lucro_Previsto_total = c.getString(index[4]);
+                String Quantindade_P = c.getString(index[5]);
+                String Quantindade_P_total = c.getString(index[6]);
 
                 Long id = c.getLong(columnIndex);
 

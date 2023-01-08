@@ -48,7 +48,7 @@
                     app:srcCompat="@drawable/ic_add" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/quantidade_adapter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10"
@@ -71,18 +71,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KG:" />
-
-                <TextView
-                    android:id="@+id/txt_KG_adapter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="60dp"
+                    android:layout_marginLeft="10dp"
                     android:text="V.un R$" />
 
                 <TextView
@@ -94,7 +83,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="130dp"
                     android:text="V.Total R$" />
 
                 <TextView

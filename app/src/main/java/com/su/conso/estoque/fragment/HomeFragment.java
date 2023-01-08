@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.su.conso.estoque.R;
+import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.model.DadosProdutos;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,11 +67,11 @@ public class HomeFragment extends Fragment {
     }
     private TextView txt_QP,txt_VT,txt_LP;
     private EditText editNome,editValor_uni,editQuantidade,editLucro;
-    private ImageButton btnNewP,btnInfo;
+    private ImageButton btnNewP,btnInfo,btnClose;
     private Button btnSalvarSaldo;
     private ConstraintLayout constraintLayout;
     private AlertDialog alertDialog;
-
+    private DadosDAO dadosDAO;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,11 +84,13 @@ public class HomeFragment extends Fragment {
         btnNewP = view.findViewById(R.id.novoProduto);
         btnInfo = view.findViewById(R.id.btn_info);
         constraintLayout = view.findViewById(R.id.constraint_alert);
+        dadosDAO = new DadosDAO(getActivity());
+
 
         btnNewP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            novoProduto(view);
+            novoProduto();
 
             }
         });
@@ -96,7 +100,7 @@ public class HomeFragment extends Fragment {
         return  view;
     }
 
-    public void novoProduto(View view){
+    public void novoProduto(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity(),R.style.TemaAlertdialo);
         View viewAlert = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dalog, constraintLayout);
         alert.setCancelable(false);
@@ -115,6 +119,7 @@ public class HomeFragment extends Fragment {
         editQuantidade = view.findViewById(R.id.editTxt_quantidade_newP);
         editNome = view.findViewById(R.id.editTxt_nome_newP);
         editLucro = view.findViewById(R.id.editTxt_lucro_newP);
+        btnClose = view.findViewById(R.id.btnCloseNew_p);
 
         btnSalvarSaldo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,20 +130,38 @@ public class HomeFragment extends Fragment {
                     if (!editNome.getText().toString().isEmpty()) {
                             if (!editQuantidade.getText().toString().isEmpty()) {
                                 if (!editLucro.getText().toString().isEmpty()) {
-                                    if (!editValor_uni.getText().toString().isEmpty() && !editValor_uni.getText().toString().equals("0")) {
-                                        //safdslajflkdssafasf
-                                        double saldo = Double.parseDouble(editValor_uni.getText().toString());
-                                        Toast.makeText(getActivity(), "Salvo", Toast.LENGTH_SHORT).show();
+                                    if (!editValor_uni.getText().toString().isEmpty()) {
+                                        DadosProdutos produtos = new DadosProdutos();
+                                        produtos.setNome(editNome.getText().toString());
+                                        produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
+                                        produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
+                                        produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
 
+                                        if (dadosDAO.salvar(produtos)){
+                                            msg("Salvo com sucesso!");
+                                            alertDialog.dismiss();
+                                        }else{
+                                            msg("Erro!");
+                                        }
                                     }
                                 }
                         }
                     }
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
+                    msg(String.valueOf(e.getStackTrace()));
                 }
             }
         });
-//verificando git
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+    private void msg(String txt){
+        Toast.makeText(getActivity(), txt, Toast.LENGTH_SHORT).show();
     }
 }
