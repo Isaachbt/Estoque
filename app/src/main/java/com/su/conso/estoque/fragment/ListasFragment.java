@@ -3,12 +3,20 @@ package com.su.conso.estoque.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.su.conso.estoque.R;
+import com.su.conso.estoque.adapter.Adapter;
+import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.model.DadosProdutos;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,11 +64,33 @@ public class ListasFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    private RecyclerView recyclerView;
+    private Adapter adapter;
+    private List<DadosProdutos> listProduto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listas, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_listas, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        carregarListaProduto();
+
+        return  view;
     }
+
+    public void carregarListaProduto(){
+        DadosDAO dadosDAO = new DadosDAO(getActivity());
+        listProduto = dadosDAO.listar();
+
+        adapter = new Adapter(listProduto);
+
+        recyclerView.setAdapter(adapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        Collections.reverse(listProduto);
+    }
+
 }
