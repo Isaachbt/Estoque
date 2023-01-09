@@ -77,6 +77,7 @@ public class ListasFragment extends Fragment {
     private Adapter adapter;
     private List<DadosProdutos> listProduto;
     private DadosProdutos dadosP;
+    private DadosProdutos dadosRecup;
     private  DadosDAO dadosDAO;
     private ConstraintLayout constraintLayout;
     private android.app.AlertDialog alertDialog;
@@ -96,7 +97,6 @@ public class ListasFragment extends Fragment {
         config();
         dadosP = new DadosProdutos();
         dadosDAO = new DadosDAO(getActivity());
-
 
 
         return  view;
@@ -123,7 +123,7 @@ public class ListasFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                          dadosP = listProduto.get(position);
-                         editaProduto(dadosP);
+                         editaProduto();
                     }
 
                     @Override
@@ -162,19 +162,19 @@ public class ListasFragment extends Fragment {
                 }));
     }
 
-    private void editaProduto(DadosProdutos dadosAtualizar) {
+    private void editaProduto() {
         android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getActivity(),R.style.TemaAlertdialo);
         View viewAlert = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dalog, constraintLayout);
         alert.setCancelable(false);
         alert.setView(viewAlert);
 
-        atualizarProduto(viewAlert,dadosAtualizar);
+        atualizarProduto(viewAlert);
 
         alertDialog = alert.create();
         alertDialog.show();
     }
 
-    private void atualizarProduto(View view, DadosProdutos dadosAtualizar) {
+    private void atualizarProduto(View view) {
 
         btnAtualzarP = view.findViewById(R.id.btn_salvar_newP);
         editValor_uni = view.findViewById(R.id.editTxt_Valor_newP);
@@ -183,43 +183,7 @@ public class ListasFragment extends Fragment {
         editLucro = view.findViewById(R.id.editTxt_lucro_newP);
         btnClose = view.findViewById(R.id.btnCloseNew_p);
 
-        editNome.setText(dadosAtualizar.getNome());
-        editValor_uni.setText(String.valueOf( dadosAtualizar.getValor_uni()));
-        editQuantidade.setText(String.valueOf(dadosAtualizar.getQuantindade_P()));
-        editLucro.setText(String.valueOf(dadosAtualizar.getLucro_Previsto_uni()));
-
-//        btnAtualzarP.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                try {
-//                    //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
-//                    if (!editNome.getText().toString().isEmpty()) {
-//                        if (!editQuantidade.getText().toString().isEmpty()) {
-//                            if (!editLucro.getText().toString().isEmpty()) {
-//                                if (!editValor_uni.getText().toString().isEmpty()) {
-//                                    DadosProdutos produtos = new DadosProdutos();
-//                                    produtos.setNome(editNome.getText().toString());
-//                                    produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
-//                                    produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
-//                                    produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
-//
-//                                    if (dadosDAO.salvar(produtos)){
-//                                        msg("Salvo com sucesso!");
-//                                        alertDialog.dismiss();
-//                                    }else{
-//                                        msg("Erro!");
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                } catch (Exception e) {
-//                    Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
-//                    msg(String.valueOf(e.getStackTrace()));
-//                }
-//            }
-//        });
+        editandoProdutosAtualizando();
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,15 +193,39 @@ public class ListasFragment extends Fragment {
         });
     }
 
-    private void atualizarQuantidade(int op){
-        if(op == 1){
-            dadosP.setQuantindade_P(+1);
-            if (dadosDAO.atualizar(dadosP)){
-                Toast.makeText(getActivity(), "Salvo", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getActivity(), "Erro", Toast.LENGTH_SHORT).show();
+    private void editandoProdutosAtualizando() {
+        editNome.setText(dadosP.getNome());
+        editValor_uni.setText(String.valueOf( dadosP.getValor_uni()));
+        editQuantidade.setText(String.valueOf(dadosP.getQuantindade_P()));
+        editLucro.setText(String.valueOf(dadosP.getLucro_Previsto_uni()));
+        
+        btnAtualzarP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
+                    if (!editNome.getText().toString().isEmpty()) {
+                        if (!editQuantidade.getText().toString().isEmpty()) {
+                            if (!editLucro.getText().toString().isEmpty()) {
+                                if (!editValor_uni.getText().toString().isEmpty()) {
+
+                                    DadosProdutos produtos = new DadosProdutos();
+                                    produtos.setNome(editNome.getText().toString());
+                                    produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
+                                    produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
+                                    produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
+
+                                    if (dadosDAO.atualizar(produtos)){
+                                        Toast.makeText(getContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+                                    }
+                                }}}}
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
+               }
             }
-            carregarListaProduto();
-        }
+        });
+        
+        
     }
+
 }

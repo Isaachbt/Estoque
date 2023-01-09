@@ -19,6 +19,8 @@ import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.model.DadosProdutos;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -72,6 +74,8 @@ public class HomeFragment extends Fragment {
     private ConstraintLayout constraintLayout;
     private AlertDialog alertDialog;
     private DadosDAO dadosDAO;
+    private Double valorRecuperado,LucroPrev;
+    private int quantidadeProRecuperada;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
         btnInfo = view.findViewById(R.id.btn_info);
         constraintLayout = view.findViewById(R.id.constraint_alert);
         dadosDAO = new DadosDAO(getActivity());
+        dadosRecuperados();
 
 
         btnNewP.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +101,17 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         return  view;
+    }
+
+    private void dadosRecuperados(){
+        List<DadosProdutos> list;
+        list = dadosDAO.listar();
+        DadosProdutos dadosRecup = list.get(1);
+
+        //txt_LP.setText(String.valueOf(dadosRecup.getNome()));
+
+        //dadosRecup =
     }
 
     public void novoProduto(){
@@ -161,6 +175,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void msg(String txt){
         Toast.makeText(getActivity(), txt, Toast.LENGTH_SHORT).show();
     }

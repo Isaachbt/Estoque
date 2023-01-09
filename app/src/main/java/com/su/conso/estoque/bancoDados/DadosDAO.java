@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.su.conso.estoque.model.DadosProdutos;
+import com.su.conso.estoque.model.ValoresTotal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,7 @@ public class DadosDAO implements Idados{
             cv.put("nome",dados.getNome());
             cv.put("valor_uni",dados.getValor_uni());
             cv.put("lucro_Previsto_uni",dados.getLucro_Previsto_uni());
-            cv.put("valor_Total",dados.getValor_Total());
-            cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
             cv.put("Quantindade_P",dados.getQuantindade_P());
-            cv.put("Quantindade_P_total",dados.getQuantindade_P_total());
 
             try{
                 escreve.insert(BancoDados.NOME_TABELA,null,cv);
@@ -53,10 +51,7 @@ public class DadosDAO implements Idados{
             cv.put("nome",dados.getNome());
             cv.put("valor_uni",dados.getValor_uni());
             cv.put("lucro_Previsto_uni",dados.getLucro_Previsto_uni());
-            cv.put("valor_Total",dados.getValor_Total());
-            cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
             cv.put("Quantindade_P",dados.getQuantindade_P());
-            cv.put("Quantindade_P_total",dados.getQuantindade_P_total());
             String[] argas = {String.valueOf(dados.getId())};
             try{
                 escreve.update(BancoDados.NOME_TABELA,cv,"id=?",argas);
@@ -78,6 +73,42 @@ public class DadosDAO implements Idados{
             return true;
         }
 
+    @Override
+    public boolean salvarTotal(ValoresTotal valores) {
+        ContentValues cv = new ContentValues();
+        cv.put("valor_Total",valores.getValor_Total());
+        cv.put("lucro_Previsto_total",valores.getLucro_Previsto_total());
+        cv.put("Quantindade_P_total",valores.getQuantindade_P_total());
+        try{
+            escreve.insert(BancoDados.NOME_TABELA,null,cv);
+            Log.i("INFO","salvo com sucesso");
+        }catch (Exception e){
+            Log.e("INFO","Erro ao salvar");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean atualizarTotal(ValoresTotal valores) {
+        ContentValues cv = new ContentValues();
+        cv.put("valor_Total",valores.getValor_Total());
+        cv.put("lucro_Previsto_total",valores.getLucro_Previsto_total());
+        cv.put("Quantindade_P_total",valores.getQuantindade_P_total());
+        String[] argas = {String.valueOf(valores.getId())};
+        try{
+            escreve.update(BancoDados.NOME_TABELA,cv,"id=?",argas);
+
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean recuperarDados(ValoresTotal valores) {
+        return false;
+    }
 
     public List<DadosProdutos> listar() {
             List<DadosProdutos> dadosList = new ArrayList<>();
@@ -93,19 +124,8 @@ public class DadosDAO implements Idados{
                         c.getColumnIndex("nome"),
                         c.getColumnIndex("valor_uni"),
                         c.getColumnIndex("lucro_Previsto_uni"),
-                        c.getColumnIndex("valor_Total"),
-                        c.getColumnIndex("lucro_Previsto_total"),
                         c.getColumnIndex("Quantindade_P"),
-                        c.getColumnIndex("Quantindade_P_total")
                 };
-
-//                String nomeConlum = String.valueOf(c.getColumnIndex("nome"));
-//                String valorUniColum = String.valueOf(c.getColumnIndex("valor_uni"));
-//                String lucroPreConlum = String.valueOf(c.getColumnIndex("lucro_Previsto_uni"));
-//                String valorTotalConlum = String.valueOf(c.getColumnIndex("valor_Total"));
-//                String lucroPreTotalConlum = String.valueOf(c.getColumnIndex("lucro_Previsto_total"));
-//                String quantidadePConlum = String.valueOf(c.getColumnIndex("Quantindade_P"));
-//                String quantidadePTotalConlum = String.valueOf(c.getColumnIndex("Quantindade_P_total"));
 
                 String nome = c.getString(index[0]);
                 String valor_uni = c.getString(index[1]);
@@ -121,13 +141,13 @@ public class DadosDAO implements Idados{
                 dados.setNome(nome);
                 dados.setValor_uni(Double.parseDouble(valor_uni));
                 dados.setLucro_Previsto_uni(Double.parseDouble(lucro_Previsto_uni));
-                dados.setValor_Total(Double.parseDouble(valor_Total));
-                dados.setLucro_Previsto_total(Double.parseDouble(lucro_Previsto_total));
                 dados.setQuantindade_P(Integer.parseInt(Quantindade_P));
-                dados.setQuantindade_P_total(Integer.parseInt(Quantindade_P_total));
 
                 dadosList.add(dados);
             }
             return dadosList;
         }
+
+
+
 }
