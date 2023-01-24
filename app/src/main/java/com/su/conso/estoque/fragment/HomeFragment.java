@@ -20,8 +20,6 @@ import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.model.DadosProdutos;
 import com.su.conso.estoque.model.ValoresTotal;
 
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -77,6 +75,7 @@ public class HomeFragment extends Fragment {
     private DadosDAO dadosDAO;
     private Double valorTotalRecu,lucroPrevTotalRecup;
     private int quantidadeTotaRecuperada;
+    private  DadosProdutos dadosRecuperado = new DadosProdutos();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,6 +89,7 @@ public class HomeFragment extends Fragment {
         btnInfo = view.findViewById(R.id.btn_info);
         constraintLayout = view.findViewById(R.id.constraint_alert);
         dadosDAO = new DadosDAO(getActivity());
+        recuperarValores();
 
 
         btnNewP.setOnClickListener(new View.OnClickListener() {
@@ -135,20 +135,26 @@ public class HomeFragment extends Fragment {
                                 if (!editValor_uni.getText().toString().isEmpty()) {
                                     ValoresTotal valoresTotal = new ValoresTotal();
                                     DadosProdutos produtos = new DadosProdutos();
-                                    double lucro = Double.parseDouble(editLucro.getText().toString());
+
+
                                     double valorUni = Double.parseDouble(editValor_uni.getText().toString());
+                                    double valorTotal = (valorUni + dadosRecuperado.getValor_uni());
                                     int quantidade = Integer.parseInt(editQuantidade.getText().toString());
-//                                    valoresTotal.setValor_Total(valorTotalRecu + valorUni);
-//                                    valoresTotal.setQuantindade_P_total(quantidadeTotaRecuperada + quantidade);
-//                                    valoresTotal.setLucro_Previsto_total(lucroPrevTotalRecup + lucro);
+                                    int quantidadeTotal = (quantidade + dadosRecuperado.getQuantindade_P_total());
+                                    double lucro = Double.parseDouble(editLucro.getText().toString());
+                                    double lucroTotal = (lucro * quantidade) + dadosRecuperado.getLucro_Previsto_total();
 
                                     produtos.setNome(editNome.getText().toString());
-                                    produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
-                                    produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
-                                    produtos.setValor_Total(10);
-                                    produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
+                                    produtos.setValor_uni(valorUni);
+                                    produtos.setValor_Total(valorTotal);
+                                    produtos.setLucro_Previsto_uni(lucro);
+                                    produtos.setLucro_Previsto_total(lucroTotal);
+                                    produtos.setQuantindade_P(quantidade);
+                                    produtos.setQuantindade_P_total(quantidadeTotal);
+
                                 if (dadosDAO.salvar(produtos)){
-                                    msg("Salvo");
+                                    recuperarValores();
+                                    alertDialog.dismiss();
                                 }else{
                                     msg("erro");
                                 }
@@ -160,14 +166,26 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
                 msg(String.valueOf(e.getStackTrace()));
             }
+
         });
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+        btnClose.setOnClickListener(view12 -> alertDialog.dismiss());
+    }
+
+    private void recuperarValores(){
+
+
+        for (int i = 0; i < dadosDAO.listar().size();i++){
+            System.out.println("oi"+i);
+             dadosRecuperado = (DadosProdutos) dadosDAO.listar().get(i);
+        }
+
+        txt_LP.setText(String.valueOf(dadosRecuperado.getLucro_Previsto_total()));
+        txt_VT.setText(String.valueOf(dadosRecuperado.getValor_Total()));
+        txt_QP.setText(String.valueOf(dadosRecuperado.getQuantindade_P_total()));
+
+
+
     }
 
     private void msg(String txt){
