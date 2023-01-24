@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.model.DadosProdutos;
+import com.su.conso.estoque.model.ValoresTotal;
 
 import java.util.List;
 
@@ -74,8 +75,8 @@ public class HomeFragment extends Fragment {
     private ConstraintLayout constraintLayout;
     private AlertDialog alertDialog;
     private DadosDAO dadosDAO;
-    private Double valorRecuperado,LucroPrev;
-    private int quantidadeProRecuperada;
+    private Double valorTotalRecu,lucroPrevTotalRecup;
+    private int quantidadeTotaRecuperada;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,7 +90,6 @@ public class HomeFragment extends Fragment {
         btnInfo = view.findViewById(R.id.btn_info);
         constraintLayout = view.findViewById(R.id.constraint_alert);
         dadosDAO = new DadosDAO(getActivity());
-        dadosRecuperados();
 
 
         btnNewP.setOnClickListener(new View.OnClickListener() {
@@ -102,16 +102,6 @@ public class HomeFragment extends Fragment {
 
 
         return  view;
-    }
-
-    private void dadosRecuperados(){
-        List<DadosProdutos> list;
-        list = dadosDAO.listar();
-        DadosProdutos dadosRecup = list.get(1);
-
-        //txt_LP.setText(String.valueOf(dadosRecup.getNome()));
-
-        //dadosRecup =
     }
 
     public void novoProduto(){
@@ -135,36 +125,40 @@ public class HomeFragment extends Fragment {
         editLucro = view.findViewById(R.id.editTxt_lucro_newP);
         btnClose = view.findViewById(R.id.btnCloseNew_p);
 
-        btnSalvarProduto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSalvarProduto.setOnClickListener(view1 -> {
 
-                try {
-                    //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
-                    if (!editNome.getText().toString().isEmpty()) {
-                            if (!editQuantidade.getText().toString().isEmpty()) {
-                                if (!editLucro.getText().toString().isEmpty()) {
-                                    if (!editValor_uni.getText().toString().isEmpty()) {
-                                        DadosProdutos produtos = new DadosProdutos();
-                                        produtos.setNome(editNome.getText().toString());
-                                        produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
-                                        produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
-                                        produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
+            try {
+                //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
+                if (!editNome.getText().toString().isEmpty()) {
+                        if (!editQuantidade.getText().toString().isEmpty()) {
+                            if (!editLucro.getText().toString().isEmpty()) {
+                                if (!editValor_uni.getText().toString().isEmpty()) {
+                                    ValoresTotal valoresTotal = new ValoresTotal();
+                                    DadosProdutos produtos = new DadosProdutos();
+                                    double lucro = Double.parseDouble(editLucro.getText().toString());
+                                    double valorUni = Double.parseDouble(editValor_uni.getText().toString());
+                                    int quantidade = Integer.parseInt(editQuantidade.getText().toString());
+//                                    valoresTotal.setValor_Total(valorTotalRecu + valorUni);
+//                                    valoresTotal.setQuantindade_P_total(quantidadeTotaRecuperada + quantidade);
+//                                    valoresTotal.setLucro_Previsto_total(lucroPrevTotalRecup + lucro);
 
-                                        if (dadosDAO.salvar(produtos)){
-                                            msg("Salvo com sucesso!");
-                                            alertDialog.dismiss();
-                                        }else{
-                                            msg("Erro!");
-                                        }
-                                    }
+                                    produtos.setNome(editNome.getText().toString());
+                                    produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
+                                    produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
+                                    produtos.setValor_Total(10);
+                                    produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
+                                if (dadosDAO.salvar(produtos)){
+                                    msg("Salvo");
+                                }else{
+                                    msg("erro");
                                 }
-                        }
+                                }
+                            }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
-                    msg(String.valueOf(e.getStackTrace()));
                 }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
+                msg(String.valueOf(e.getStackTrace()));
             }
         });
 

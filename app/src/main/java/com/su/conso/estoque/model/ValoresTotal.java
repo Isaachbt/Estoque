@@ -2,10 +2,11 @@ package com.su.conso.estoque.model;
 
 public class ValoresTotal {
 
-    private int Quantindade_P_total ;
-    private double lucro_Previsto_total ;
-    private double valor_Total ;
+    private int Quantindade_P_total = 0 ;
+    private double lucro_Previsto_total =  0 ;
+    private double valor_Total  = 0;
     private Long id;
+
 
 
     public Long getId() {

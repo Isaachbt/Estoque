@@ -38,8 +38,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         holder.nome.setText(produtos.getNome());
         String valor_uni = String.valueOf(produtos.getValor_uni());
         holder.valorUni.setText(valor_uni);
-       // String valorTotal = String.valueOf(produtos.getValor_Total());
-        //holder.valorTotal.setText(valorTotal);
+        String valorTotal = String.valueOf(produtos.getValor_Total());
+        holder.valorTotal.setText(valorTotal);
         String quanti = String.valueOf(produtos.getQuantindade_P());
         holder.quantidade.setText(quanti);
     }

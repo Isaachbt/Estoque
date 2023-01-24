@@ -23,6 +23,7 @@ import com.su.conso.estoque.adapter.Adapter;
 import com.su.conso.estoque.adapter.RecyclerItemClick;
 import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.model.DadosProdutos;
+import com.su.conso.estoque.model.ValoresTotal;
 
 import java.util.Collections;
 import java.util.List;
@@ -84,6 +85,8 @@ public class ListasFragment extends Fragment {
     private EditText editNome,editValor_uni,editQuantidade,editLucro;
     private ImageButton btnClose;
     private Button btnAtualzarP;
+    private int quantProduto;
+    private double  valorTotal, lucroPrevisto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,14 +95,20 @@ public class ListasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_listas, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        constraintLayout = view.findViewById(R.id.constraint_alert);
+       // constraintLayout = view.findViewById(R.id.constraint_alert);
         carregarListaProduto();
-        config();
+        //config();
         dadosP = new DadosProdutos();
         dadosDAO = new DadosDAO(getActivity());
 
 
         return  view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+       // carregarListaProduto();
     }
 
     public void carregarListaProduto(){
@@ -169,6 +178,7 @@ public class ListasFragment extends Fragment {
         alert.setView(viewAlert);
 
         atualizarProduto(viewAlert);
+        //dadosRecuperados();
 
         alertDialog = alert.create();
         alertDialog.show();
@@ -185,12 +195,7 @@ public class ListasFragment extends Fragment {
 
         editandoProdutosAtualizando();
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+        btnClose.setOnClickListener(view1 -> alertDialog.dismiss());
     }
 
     private void editandoProdutosAtualizando() {
@@ -210,14 +215,13 @@ public class ListasFragment extends Fragment {
                                 if (!editValor_uni.getText().toString().isEmpty()) {
 
                                     DadosProdutos produtos = new DadosProdutos();
+
                                     produtos.setNome(editNome.getText().toString());
                                     produtos.setValor_uni(Double.parseDouble(editValor_uni.getText().toString()));
                                     produtos.setQuantindade_P(Integer.parseInt(editQuantidade.getText().toString()));
                                     produtos.setLucro_Previsto_uni(Double.parseDouble(editLucro.getText().toString()));
 
-                                    if (dadosDAO.atualizar(produtos)){
-                                        Toast.makeText(getContext(), "Atualizado", Toast.LENGTH_SHORT).show();
-                                    }
+
                                 }}}}
                 }catch (Exception e){
                     Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
@@ -227,5 +231,7 @@ public class ListasFragment extends Fragment {
         
         
     }
+
+
 
 }
