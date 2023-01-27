@@ -95,8 +95,8 @@ public class ListasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
     binding = FragmentListasBinding.inflate(inflater,container,false);
-        View view = binding.getRoot()
-        binding.
+        View view = binding.getRoot();
+
        // constraintLayout = view.findViewById(R.id.constraint_alert);
         carregarListaProduto();
         //config();
