@@ -22,6 +22,8 @@ import com.su.conso.estoque.R;
 import com.su.conso.estoque.adapter.Adapter;
 import com.su.conso.estoque.adapter.RecyclerItemClick;
 import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.databinding.FragmentHomeBinding;
+import com.su.conso.estoque.databinding.FragmentListasBinding;
 import com.su.conso.estoque.model.DadosProdutos;
 import com.su.conso.estoque.model.ValoresTotal;
 
@@ -87,14 +89,14 @@ public class ListasFragment extends Fragment {
     private Button btnAtualzarP;
     private int quantProduto;
     private double  valorTotal, lucroPrevisto;
+    private FragmentListasBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_listas, container, false);
-
-        recyclerView = view.findViewById(R.id.recyclerView);
+    binding = FragmentListasBinding.inflate(inflater,container,false);
+        View view = binding.getRoot()
+        binding.
        // constraintLayout = view.findViewById(R.id.constraint_alert);
         carregarListaProduto();
         //config();
@@ -117,17 +119,17 @@ public class ListasFragment extends Fragment {
 
         adapter = new Adapter(listProduto);
 
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setHasFixedSize(true);
         Collections.reverse(listProduto);
 
     }
 
     private void config() {
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClick(getActivity(), recyclerView,
+        binding.recyclerView.addOnItemTouchListener(new RecyclerItemClick(getActivity(),  binding.recyclerView,
                 new RecyclerItemClick.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {

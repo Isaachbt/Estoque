@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.databinding.FragmentHomeBinding;
 import com.su.conso.estoque.model.DadosProdutos;
 import com.su.conso.estoque.model.ValoresTotal;
 
@@ -65,6 +66,8 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
     private TextView txt_QP,txt_VT,txt_LP;
     private EditText editNome,editValor_uni,editQuantidade,editLucro;
@@ -75,30 +78,24 @@ public class HomeFragment extends Fragment {
     private DadosDAO dadosDAO;
     private Double valorTotalRecu,lucroPrevTotalRecup;
     private int quantidadeTotaRecuperada;
+    //private FragmentHomeBinding binding;
+    private FragmentHomeBinding binding;
+
     private  DadosProdutos dadosRecuperado = new DadosProdutos();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = binding.getRoot();
 
-        txt_QP = view.findViewById(R.id.txt_QP);
-        txt_VT = view.findViewById(R.id.txt_VT);
-        txt_LP = view.findViewById(R.id.txt_LP);
-        btnNewP = view.findViewById(R.id.novoProduto);
         btnInfo = view.findViewById(R.id.btn_info);
         constraintLayout = view.findViewById(R.id.constraint_alert);
         dadosDAO = new DadosDAO(getActivity());
         recuperarValores();
 
 
-        btnNewP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            novoProduto();
-
-            }
-        });
+        binding.novoProduto.setOnClickListener(view1 -> novoProduto());
 
 
         return  view;
@@ -180,11 +177,15 @@ public class HomeFragment extends Fragment {
              dadosRecuperado = (DadosProdutos) dadosDAO.listar().get(i);
         }
 
-        txt_LP.setText(String.valueOf(dadosRecuperado.getLucro_Previsto_total()));
-        txt_VT.setText(String.valueOf(dadosRecuperado.getValor_Total()));
-        txt_QP.setText(String.valueOf(dadosRecuperado.getQuantindade_P_total()));
+        binding.txtLP.setText(String.valueOf(dadosRecuperado.getLucro_Previsto_total()));
+        binding.txtVT.setText(String.valueOf(dadosRecuperado.getValor_Total()));
+        binding.txtQP.setText(String.valueOf(dadosRecuperado.getQuantindade_P_total()));
 
 
+
+    }
+
+    private void info(){
 
     }
 
