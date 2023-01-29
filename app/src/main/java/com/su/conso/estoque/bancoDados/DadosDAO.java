@@ -36,6 +36,7 @@ public class DadosDAO implements Idados{
             cv.put("Quantindade_P_total",dados.getQuantindade_P_total());
             cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
             cv.put("valor_Total",dados.getValor_Total());
+            cv.put("valor_Total_Produto",dados.getValor_Total_Produto());
 
             try{
                 escreve.insert(BancoDados.NOME_TABELA,null,cv);
@@ -57,6 +58,7 @@ public class DadosDAO implements Idados{
             cv.put("Quantindade_P_total",dados.getQuantindade_P_total());
             cv.put("lucro_Previsto_total",dados.getLucro_Previsto_total());
             cv.put("valor_Total",dados.getValor_Total());
+            cv.put("valor_Total_Produto",dados.getValor_Total_Produto());
             String[] argas = {String.valueOf(dados.getId())};
             try{
                 escreve.update(BancoDados.NOME_TABELA,cv,"id=?",argas);
@@ -95,7 +97,8 @@ public class DadosDAO implements Idados{
                         c.getColumnIndex("Quantindade_P"),
                         c.getColumnIndex("Quantindade_P_total"),
                         c.getColumnIndex("lucro_Previsto_total"),
-                        c.getColumnIndex("valor_Total")
+                        c.getColumnIndex("valor_Total"),
+                        c.getColumnIndex("valor_Total_Produto")
                 };
 
                 String nome = c.getString(index[0]);
@@ -105,6 +108,7 @@ public class DadosDAO implements Idados{
                 String Quantindade_P_total = c.getString(index[4]);
                 String lucro_Previsto_total = c.getString(index[5]);
                 String valor_Total = c.getString(index[6]);
+                String valor_Total_Produto = c.getString(index[7]);
 
                 Long id = c.getLong(columnIndex);
 
@@ -116,7 +120,7 @@ public class DadosDAO implements Idados{
                 dados.setLucro_Previsto_total(Double.parseDouble(lucro_Previsto_total));
                 dados.setValor_Total(Double.parseDouble(valor_Total));
                 dados.setQuantindade_P_total(Integer.parseInt(Quantindade_P_total));
-
+                dados.setValor_Total_Produto(Integer.parseInt(valor_Total_Produto));
                 dadosList.add(dados);
             }
             return dadosList;

@@ -10,22 +10,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.su.conso.estoque.R;
+import com.su.conso.estoque.databinding.ActivityMainBinding;
 import com.su.conso.estoque.fragment.HomeFragment;
 import com.su.conso.estoque.fragment.ListasFragment;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        navigationView = findViewById(R.id.button_navegation);
         habilitarNavegacao();
 
     }
@@ -44,23 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void habilitarNavegacao(){
 
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        binding.buttonNavegation.setOnItemSelectedListener(item -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                switch (item.getItemId()){
-                    case R.id.menu_home:
-                        fragmentTransaction.replace(R.id.viewPage,new HomeFragment()).commit();
-                        return true;
+            switch (item.getItemId()){
+                case R.id.menu_home:
+                    fragmentTransaction.replace(R.id.viewPage,new HomeFragment()).commit();
+                    return true;
 
-                    case R.id.menu_list:
-                        fragmentTransaction.replace(R.id.viewPage,new ListasFragment()).commit();
-                        return true;
-                }
-                return false;
+                case R.id.menu_list:
+                    fragmentTransaction.replace(R.id.viewPage,new ListasFragment()).commit();
+                    return true;
             }
+            return false;
         });
     }
 

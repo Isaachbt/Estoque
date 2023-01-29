@@ -39,7 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         ConvertValor convert = new ConvertValor();
         holder.nome.setText(produtos.getNome());
         holder.valorUni.setText(convert.convert(String.valueOf(produtos.getValor_uni())));
-        holder.valorTotal.setText(convert.convert(String.valueOf(produtos.getValor_Total())));
+        holder.valorTotalProduto.setText(convert.convert(String.valueOf(produtos.getValor_Total_Produto())));
         holder.quantidade.setText(String.valueOf(produtos.getQuantindade_P()));
     }
 
@@ -49,14 +49,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView nome,valorUni,valorTotal,quantidade;
+        private TextView nome,valorUni,valorTotalProduto,quantidade;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nome = itemView.findViewById(R.id.txt_nome_adapter);
             valorUni = itemView.findViewById(R.id.txt_valor_un_adapter);
-            valorTotal = itemView.findViewById(R.id.txt_valorTotal_adapter);
+            valorTotalProduto = itemView.findViewById(R.id.txt_valorTotal_adapter);
             quantidade = itemView.findViewById(R.id.quantidade_adapter);
         }
     }

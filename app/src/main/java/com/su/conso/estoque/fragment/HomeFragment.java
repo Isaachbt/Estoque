@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.config.ConvertValor;
+import com.su.conso.estoque.databinding.AlertDalogBinding;
 import com.su.conso.estoque.databinding.FragmentHomeBinding;
 import com.su.conso.estoque.model.DadosProdutos;
 import com.su.conso.estoque.model.ValoresTotal;
@@ -70,17 +71,18 @@ public class HomeFragment extends Fragment {
 
 
     }
-    private TextView txt_QP,txt_VT,txt_LP;
-    private EditText editNome,editValor_uni,editQuantidade,editLucro;
-    private ImageButton btnNewP,btnInfo,btnClose;
-    private Button btnSalvarProduto;
-    private ConstraintLayout constraintLayout;
+//    private TextView txt_QP,txt_VT,txt_LP;
+//    private EditText editNome,editValor_uni,editQuantidade,editLucro;
+//    private ImageButton btnNewP,btnInfo,btnClose;
+//    private Button btnSalvarProduto;
+//    private ConstraintLayout constraintLayout;
     private AlertDialog alertDialog;
     private DadosDAO dadosDAO;
     private Double valorTotalRecu,lucroPrevTotalRecup;
     private int quantidadeTotaRecuperada;
     //private FragmentHomeBinding binding;
     private FragmentHomeBinding binding;
+    private AlertDalogBinding alertDalogBinding;
 
     private  DadosProdutos dadosRecuperado = new DadosProdutos();
     @Override
@@ -90,8 +92,8 @@ public class HomeFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        btnInfo = view.findViewById(R.id.btn_info);
-        constraintLayout = view.findViewById(R.id.constraint_alert);
+//        btnInfo = view.findViewById(R.id.btn_info);
+//        constraintLayout = view.findViewById(R.id.constraint_alert);
         dadosDAO = new DadosDAO(getActivity());
         recuperarValores();
 
@@ -104,7 +106,8 @@ public class HomeFragment extends Fragment {
 
     public void novoProduto(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity(),R.style.TemaAlertdialo);
-        View viewAlert = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dalog, constraintLayout);
+        alertDalogBinding = AlertDalogBinding.inflate(getLayoutInflater());
+        View viewAlert = alertDalogBinding.getRoot();
         alert.setCancelable(false);
         alert.setView(viewAlert);
 
@@ -115,40 +118,38 @@ public class HomeFragment extends Fragment {
     }
 
     public void configAlertDialog(View view){
+        //recuperarValores();
 
-        btnSalvarProduto = view.findViewById(R.id.btn_salvar_newP);
-        editValor_uni = view.findViewById(R.id.editTxt_Valor_newP);
-        editQuantidade = view.findViewById(R.id.editTxt_quantidade_newP);
-        editNome = view.findViewById(R.id.editTxt_nome_newP);
-        editLucro = view.findViewById(R.id.editTxt_lucro_newP);
-        btnClose = view.findViewById(R.id.btnCloseNew_p);
-
-        btnSalvarProduto.setOnClickListener(view1 -> {
+        alertDalogBinding.btnSalvarNewP.setOnClickListener(view1 -> {
 
             try {
                 //String editSaldoValidado = String.valueOf(editSaldo.getRawValue());
-                if (!editNome.getText().toString().isEmpty()) {
-                        if (!editQuantidade.getText().toString().isEmpty()) {
-                            if (!editLucro.getText().toString().isEmpty()) {
-                                if (!editValor_uni.getText().toString().isEmpty()) {
-                                    ValoresTotal valoresTotal = new ValoresTotal();
+                String nome = alertDalogBinding.editTxtNomeNewP.getText().toString();
+                String lucroP = String.valueOf(alertDalogBinding.editTxtLucroNewP.getRawValue());
+                String valor = String.valueOf(alertDalogBinding.editTxtValorNewP.getRawValue());
+                String quanti = alertDalogBinding.editTxtQuantidadeNewP.getText().toString();
+                if (!nome.isEmpty()) {
+                        if (!quanti.isEmpty()) {
+                            if (!lucroP.isEmpty()) {
+                                if (!valor.isEmpty()) {
                                     DadosProdutos produtos = new DadosProdutos();
 
-
-                                    double valorUni = Double.parseDouble(editValor_uni.getText().toString());
-                                    double valorTotal = (valorUni + dadosRecuperado.getValor_uni());
-                                    int quantidade = Integer.parseInt(editQuantidade.getText().toString());
+                                    double valorUni = Double.parseDouble(valor);
+                                    int quantidade = Integer.parseInt(quanti);
+                                    double valorTotal = (valorUni * quantidade) + dadosRecuperado.getValor_Total();
+                                    double valorTotalProduto = (valorUni * quantidade);
                                     int quantidadeTotal = (quantidade + dadosRecuperado.getQuantindade_P_total());
-                                    double lucro = Double.parseDouble(editLucro.getText().toString());
+                                    double lucro = Double.parseDouble(lucroP);
                                     double lucroTotal = (lucro * quantidade) + dadosRecuperado.getLucro_Previsto_total();
 
-                                    produtos.setNome(editNome.getText().toString());
+                                    produtos.setNome(nome);
                                     produtos.setValor_uni(valorUni);
                                     produtos.setValor_Total(valorTotal);
                                     produtos.setLucro_Previsto_uni(lucro);
                                     produtos.setLucro_Previsto_total(lucroTotal);
                                     produtos.setQuantindade_P(quantidade);
                                     produtos.setQuantindade_P_total(quantidadeTotal);
+                                    produtos.setValor_Total_Produto(valorTotalProduto);
 
                                 if (dadosDAO.salvar(produtos)){
                                     recuperarValores();
@@ -162,12 +163,12 @@ public class HomeFragment extends Fragment {
                 }
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Tente novamente.", Toast.LENGTH_SHORT).show();
-                msg(String.valueOf(e.getStackTrace()));
+                msg(String.valueOf(e.getMessage()));
             }
 
         });
 
-        btnClose.setOnClickListener(view12 -> alertDialog.dismiss());
+        alertDalogBinding.btnCloseNewP.setOnClickListener(view12 -> alertDialog.dismiss());
     }
 
     private void recuperarValores(){
@@ -187,9 +188,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void info(){
-
     }
-
     private void msg(String txt){
         Toast.makeText(getActivity(), txt, Toast.LENGTH_SHORT).show();
     }

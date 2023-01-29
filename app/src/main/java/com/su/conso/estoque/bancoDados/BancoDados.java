@@ -24,7 +24,7 @@ public class BancoDados extends SQLiteOpenHelper {
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " nome TEXT, valor_uni REAL,lucro_Previsto_uni REAL," +
                 "Quantindade_P INTEGER, Quantindade_P_total INTEGER  , lucro_Previsto_total REAL," +
-                " valor_Total REAL)";
+                " valor_Total REAL, valor_Total_Produto REAL)";
 
         try{
             db.execSQL(slq);

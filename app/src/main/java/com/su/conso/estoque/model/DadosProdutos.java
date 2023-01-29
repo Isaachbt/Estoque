@@ -10,6 +10,7 @@ public class DadosProdutos {
     private int Quantindade_P_total = 0 ;
     private double lucro_Previsto_total =  0 ;
     private double valor_Total  = 0;
+    private double valor_Total_Produto;
 
 
     public String getNome() {
@@ -76,4 +77,11 @@ public class DadosProdutos {
         this.valor_Total = valor_Total;
     }
 
+    public double getValor_Total_Produto() {
+        return valor_Total_Produto;
+    }
+
+    public void setValor_Total_Produto(double valor_Total_Produto) {
+        this.valor_Total_Produto = valor_Total_Produto;
+    }
 }
