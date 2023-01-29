@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.config.ConvertValor;
 import com.su.conso.estoque.databinding.FragmentHomeBinding;
 import com.su.conso.estoque.model.DadosProdutos;
 import com.su.conso.estoque.model.ValoresTotal;
@@ -176,10 +177,10 @@ public class HomeFragment extends Fragment {
             System.out.println("oi"+i);
              dadosRecuperado = (DadosProdutos) dadosDAO.listar().get(i);
         }
-
-        binding.txtLP.setText(String.valueOf(dadosRecuperado.getLucro_Previsto_total()));
-        binding.txtVT.setText(String.valueOf(dadosRecuperado.getValor_Total()));
-        binding.txtQP.setText(String.valueOf(dadosRecuperado.getQuantindade_P_total()));
+        ConvertValor convertValor = new ConvertValor();
+        binding.txtLP.setText(convertValor.convert(String.valueOf(dadosRecuperado.getLucro_Previsto_total())));
+        binding.txtVT.setText((convertValor.convert(String.valueOf(dadosRecuperado.getValor_Total()))));
+        binding.txtQP.setText((convertValor.convert(String.valueOf(dadosRecuperado.getQuantindade_P_total()))));
 
 
 
