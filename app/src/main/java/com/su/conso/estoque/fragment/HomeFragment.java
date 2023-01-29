@@ -180,7 +180,7 @@ public class HomeFragment extends Fragment {
         ConvertValor convertValor = new ConvertValor();
         binding.txtLP.setText(convertValor.convert(String.valueOf(dadosRecuperado.getLucro_Previsto_total())));
         binding.txtVT.setText((convertValor.convert(String.valueOf(dadosRecuperado.getValor_Total()))));
-        binding.txtQP.setText((convertValor.convert(String.valueOf(dadosRecuperado.getQuantindade_P_total()))));
+        binding.txtQP.setText(String.valueOf(dadosRecuperado.getQuantindade_P_total()));
 
 
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.su.conso.estoque.R;
 import com.su.conso.estoque.bancoDados.DadosDAO;
+import com.su.conso.estoque.config.ConvertValor;
 import com.su.conso.estoque.model.DadosProdutos;
 
 import java.util.List;
@@ -35,13 +36,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DadosProdutos produtos = dados.get(position);
 
+        ConvertValor convert = new ConvertValor();
         holder.nome.setText(produtos.getNome());
-        String valor_uni = String.valueOf(produtos.getValor_uni());
-        holder.valorUni.setText(valor_uni);
-        String valorTotal = String.valueOf(produtos.getValor_Total());
-        holder.valorTotal.setText(valorTotal);
-        String quanti = String.valueOf(produtos.getQuantindade_P());
-        holder.quantidade.setText(quanti);
+        holder.valorUni.setText(convert.convert(String.valueOf(produtos.getValor_uni())));
+        holder.valorTotal.setText(convert.convert(String.valueOf(produtos.getValor_Total())));
+        holder.quantidade.setText(String.valueOf(produtos.getQuantindade_P()));
     }
 
     @Override
