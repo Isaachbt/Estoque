@@ -1,27 +1,24 @@
 package com.su.conso.estoque.fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.su.conso.estoque.R;
+import com.su.conso.estoque.actvity.InfoActivity;
 import com.su.conso.estoque.bancoDados.DadosDAO;
 import com.su.conso.estoque.config.ConvertValor;
 import com.su.conso.estoque.databinding.AlertDalogBinding;
 import com.su.conso.estoque.databinding.FragmentHomeBinding;
+import com.su.conso.estoque.databinding.LayoutInfoAlertBinding;
 import com.su.conso.estoque.model.DadosProdutos;
-import com.su.conso.estoque.model.ValoresTotal;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +80,7 @@ public class HomeFragment extends Fragment {
     //private FragmentHomeBinding binding;
     private FragmentHomeBinding binding;
     private AlertDalogBinding alertDalogBinding;
-
+    private LayoutInfoAlertBinding layoutInfoAlertBinding;
     private  DadosProdutos dadosRecuperado = new DadosProdutos();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,10 +96,17 @@ public class HomeFragment extends Fragment {
 
 
         binding.novoProduto.setOnClickListener(view1 -> novoProduto());
+       binding.btnInfo.setOnClickListener(view12 -> {
+         startActivity(new Intent(getActivity(), InfoActivity.class));
+       });
 
-
-        return  view;
+      return view;
     }
+
+    private void configInfo(View view){
+
+    }
+
 
     public void novoProduto(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity(),R.style.TemaAlertdialo);

@@ -2,4 +2,8 @@
     <string name="app_name">Estoque</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="LP">L.P: Lucro previsto!</string>
+    <string name="VT">V.T: Valor total!</string>
+    <string name="QP">Q.P: Quantidade de produto!</string>
 </resources>
